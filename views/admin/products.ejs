@@ -1,0 +1,85 @@
+<%- include("../layouts/adminHeader.ejs") %>
+
+<div class="col mt-5">
+    <div class="row flex-lg-nowrap">
+        <div class="col mb-3">
+            <div class="e-panel card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4>Products</h4>
+                    </div>
+                    <div class="e-table">
+                        <div class="table-responsive table-lg mt-3">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="align-top">SI</th>
+                                        <th>Photo</th>
+                                        <th class="max-width">Name</th>
+                                        <th class="sortable">Rate</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                    if(products.length>0){
+                                        for(let i=0;i<products.length;i++){ 
+                                        %>
+                                    <tr>
+                                        <td class="align-middle"><%=i+1%> </td>
+                                        <td class="align-middle text-center">
+                                            <div
+                                                class="bg-light d-inline-flex justify-content-center align-items-center align-top"
+                                                style="width: 35px; height: 35px; border-radius: 3px"
+                                            >
+                                            <img src="/productImages/<%= products[i].image[0]%>" alt="" class="img-fluid">
+                                            </div>
+                                        </td>
+                                        <td class="text-nowrap align-middle"><%= products[i].name%></td>
+                                        <td class="text-nowrap align-middle"><span><%= products[i].price%></span></td>
+                                        
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                    <a href="/admin/updateProduct?id=<%= products[i]._id %>" class="btn btn-primary">Edit</a>    
+                                                    <a href="/admin/deleteProduct?id=<%= products[i]._id %> " onclick="return confirm('Are you sure you want to Delete this Product?');" class="btn btn-danger">Delete</a> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            <% if(totalProducts>ItemsPerPage) %> 
+                            <div class="d-flex justify-content-center">
+                                <ul class="pagination mt-3 mb-0">
+                                    <% if(currentPage !=1 && needPreviousPage ==! 1){ %> 
+                                    <li class=" page-item"><a href="/admin/products?page=1" class="page-link">1</a></li>
+                                    <% } %> <% if( needPreviousPage){ %>  
+                                    <li class="page-item"><a href="/admin/products?page=<%= previousPage  %>" class="page-link"><%= previousPage %> </a></li>
+                                    <% } %>        
+                                    <li class="active page-item"><a href="/admin/products?page=<%= currentPage %>" class="page-link"><%= currentPage %></a></li>
+                                    <% if(needNextPage){ %>
+                                    <li class=" page-item"><a href="/admin/products?page=<%= nextPage %> " class="page-link"><%= nextPage %> </a></li>
+                                    <% } %>         
+                                </ul>
+                            </div>
+                            <% }else{
+                                %> <p>Products not found</p> 
+                            <%}%> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center px-xl-3">
+                        <a href="/admin/addProducts" class="btn btn-success">Add Products</a>
+                    </div>
+                    <hr class="my-3" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../layouts/adminFooter.ejs") %>

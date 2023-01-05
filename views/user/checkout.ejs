@@ -1,0 +1,221 @@
+<%- include("../layouts/header.ejs") %>
+
+<section class="">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 ftco-animate">
+                <form action="/placeOrder" class="billing-form" id="billingform" method="post">
+                    <h3 class="mb-4 billing-heading">Billing Details</h3>
+                    <% if(typeof message !== 'undefined'){%>
+                
+                        <p class="mt-1 ps-2  text-danger" ><%= message %></p>
+                         
+                       <%}%>
+                    <div class="row align-items-end">
+                        <% if(userData[0].address){ %>
+                        <div class="col-md-12">
+                            <div class="form-group mt-2">
+                                <div class="radio border p-3 pb-1" style="border-radius: 8px; line-height:1.2px;">
+                                    <label><input type="radio" name="currentAddress" value="currentAddress"> Ship to current address</label>
+                                    <p class="mt-2"> <%= userData[0].name %> </p>
+                                    <p ><%= userData[0].address %>, <%= userData[0].city %>,<%= userData[0].state %>,<%= userData[0].country %>,<%= userData[0].zip %></p>
+                                    <p>Mob:<%= userData[0].mobile %> <span>Email:<%= userData[0].email %>  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %> 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h4 class="ms-2">Add New Address</h4>
+                                <label for="firstname">Name</label>
+                                <input type="text" class="form-control" placeholder="" name="name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastname">Email Address</label>
+                                <input type="text" class="form-control" placeholder="" name="email" />
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <input type="hidden" id="payment" name="payment" value="">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastname">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="" name="phone" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="streetaddress">Street Address</label>
+                                <input type="text" class="form-control" placeholder="House number and street name" name="address" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="towncity">Town / City</label>
+                                <input type="text" class="form-control" placeholder="" name="city" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="postcodezip">Postcode / ZIP *</label>
+                                <input type="text" class="form-control" placeholder="zip" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastname">State</label>
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="emailaddress">Email Address</label>
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div> -->
+    
+                    </div>
+                </form>
+                <!-- END -->
+
+                <div class="row mt-5 pt-3 d-flex">
+                    <div class="col-md-6 d-flex">
+                        <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Cart Total</h3>
+                            <section id="message" class="text-danger">
+
+                            </section>
+                            
+                            <p class="d-flex">
+                                <span>Subtotal</span>
+                                <span><%= userData[0].cart.totalPrice %> </span>
+                            </p>
+
+                            <p class="d-flex">
+                                <span>Coupen Amount</span>
+                                <span id="coupenAmt"></span>
+                            </p>
+
+                            <p class="d-flex">
+                                <span class="mr-3">Coupen</span>
+                                <input class="mr-3 coupen" type="text" id="input">
+                                <!-- <a class="btn btn-info " href="#">Apply</a> -->
+                                <button id="btn">Apply</button>
+                            </p>
+                            <hr />
+                            <p class="d-flex total-price">
+                                <span>Total</span>
+                                <span id="sellingPrice"><%= userData[0].cart.totalPrice %> </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cart-detail bg-light p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Payment Method</h3>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label
+                                            ><input type="radio" name="optradio" class="mr-2" value="Cash on delivery"/> Cash On Delivery</label
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio" class="mr-2" value="Razorpay"/> Razorpay</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio" class="mr-2" value="paypal"/> Paypal</label>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label
+                                            ><input type="checkbox" value="" class="mr-2" /> I have read and accept the
+                                            terms and conditions</label
+                                        >
+                                    </div>
+                                </div>
+                            </div> -->
+                            <input type="submit" form="billingform" class="btn btn-primary py-3 px-4" value="Place an order" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- .col-md-8 -->
+        </div>
+    </div>
+</section>
+<!-- .section -->
+
+<script>
+
+    let rdbtns = document.querySelectorAll("input[name='optradio']")
+    let output = document.querySelector("#payment")
+    function selected() {
+         let selected = document.querySelector("input[name='optradio']:checked").value
+         output.value = selected
+    }
+    rdbtns.forEach(x=>{
+        x.addEventListener('change',selected)
+    })
+    
+    const apply = document.querySelector("#btn")
+    const applyCoupen = async ()=>{
+        const coupen = document.querySelector("#input").value
+        data = {coupen:coupen}
+        console.log(data);
+        try {
+            const response = await fetch(`/coupenApply?coupen=${coupen}`,{
+             method:'post',
+             headers:{'Content-Type':'application/json'},
+              body:JSON.stringify(data)
+            })
+            const value = await response.json()
+            console.log(value); 
+            
+            if (value.coupenAmount) {
+                document.querySelector('#message').innerHTML= ""
+                document.querySelector('#coupenAmt').innerText = value.coupenAmount
+                document.querySelector('#sellingPrice').innerText = value.cartTotal-value.coupenAmount
+            }else if (value.a) {
+                document.querySelector('#message').innerHTML = "<p>Expired Coupen</p>"
+                document.querySelector('#coupenAmt').innerText = ""
+                document.querySelector('#sellingPrice').innerText = ""
+            }else if(value.b){
+                document.querySelector('#coupenAmt').innerText = ""
+                document.querySelector('#sellingPrice').innerText = ""
+                document.querySelector('#message').innerHTML += `<p>Need ${value.cartTotal-value.minAmt} ₹ more to Apply Coupen</p>`
+            }
+            else{
+                document.querySelector('#message').innerHTML = "<p>Invalid Coupen</p>"
+                document.querySelector('#coupenAmt').innerText = ""
+                document.querySelector('#sellingPrice').innerText = ""
+            }
+            
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    }
+    apply.addEventListener('click',applyCoupen)
+   
+</script>
+
+<%- include("../layouts/footer.ejs") %>

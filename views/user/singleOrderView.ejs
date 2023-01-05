@@ -1,0 +1,63 @@
+<%- include("../layouts/header.ejs") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        <h5 class="font-weight-bold mt-0 mb-4"></h5>
+                        <div class="bg-white card mb-4 order-list shadow-sm">
+                            <div class="gold-members p-4">
+                                <a href="#"> </a>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <span class="float-right text-info"
+                                            >Ordered on <%= order.createdAt %> 
+                                            <p class="text-danger">Status: <%= order.status %> </p>
+                                            <i class="icofont-check-circled text-success"></i>
+                                        </span>
+                                        <p class="mb-2 ">
+                                            Order ID <span class="text-primary"><%= order._id %> </span>
+                                        </p>
+                                        
+                                        <p class="text-gray mb-1">
+                                            
+                                            <i class="icofont-location-arrow"></i> <span class="text-info">Address :</span> <%= order.address %> 
+                                            
+                                        </p>
+                                        <p class="text-gray mb-3">
+                                            <i class="icofont-list"></i> <%= order.city %> <%= order.zip %> 
+                                            <i class="icofont-clock-time ml-2"></i> <%= order.state %> 
+                                        </p>
+                                        <p>Products</p>
+                                        <% order.products.item.forEach( x=>{%>  
+                                        <p class="text-danger">
+                                            <%= x.productId.name %> 
+                                        </p>
+                                        <%}) %>
+                                        <hr />
+                                        <p class="mb-2 ">
+                                            Payment Method :<span class="text-info"><%= order.payment %> </span>
+                                        </p>
+                                        <div class="float-right">
+                                            <a class="btn btn-sm btn-primary" href="/userOrders"
+                                                ><i class="icofont-refresh"></i> All Orders</a
+                                            >
+                                            <a class="btn btn-sm btn-info" href="/exportInvoice?id=<%= order._id %>"
+                                                ><i class="icofont-refresh"></i> Invoice</a
+                                            >
+                                        </div>
+                                        <p class="mb-0 text-black text-primary pt-2">
+                                            <span class="text-black font-weight-bold"> Total Paid: ₹</span> <%= order.products.totalPrice %> 
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../layouts/footer.ejs") %>

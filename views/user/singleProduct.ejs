@@ -1,0 +1,46 @@
+<%- include("../layouts/header.ejs") %>
+
+<section class="mt-5 ">
+    <div class="container mb-3 ">
+        <div class="row ">
+            <div class="d-flex flex-column">   
+                <a href="productImages/<%= product.image[0] %>" class="MagicZoom singleProduct"><img class="singleProduct" src="productImages/<%= product.image[0] %>"></a>
+              
+                <!-- <a href="productImages/<%= product.image[1] %>" class="MagicZoom singleProduct mt-3" ><img class="singleProduct" src="productImages/<%= product.image[1] %>"></a> -->
+            </div>
+            <div class="col-lg-6 product-details pl-md-5 ms-5">
+                <h3><%= product.name %> </h3>
+                <span></span> <%= product.author %>
+                <% if(product.offer!=0){%>
+                    <h4 class="text-success mt-5"><span>Offer - <%= product.offer %> %</span></h4>
+                    <%} %> 
+                    <% if(product.offer != 0){%>
+                    <span>Actual Price ₹<%=product.price %></span>
+                    <h5 class="price-sale text-primary mt-2">Discount Price ₹<%= product.price *(100 - product.offer)/100 %></h5>
+                    <% }else{%>  
+                       <h5>Rate &nbsp;&nbsp;₹&nbsp;<%= product.price  %></h5>  
+                        <%} %>
+                <h5 class="mt-5">Description</h5>
+                <p class="text-info"><%= product.description %> </p>
+          </div>
+          <div class="buy">
+            <h5 style="color: rgb(255, 0, 0);"><span> Only <%= product.stock %> Pieces Left</h5>
+                <% if(typeof message!= "undefined"){%>
+                    <p class="text-success"><%= message  %> </p>
+                <%} %>  
+            <% if(userData.length==0){%>    
+                <p><a href="/login" class="btn btn-primary button1">Add to Cart</a></p>
+                <p><a href="/login" class="btn btn-info button1">Wishlist</a></p>
+                <p><a href="/login" class="btn btn-success button1">Buy Now</a></p>
+            <%}else{%>
+                <p><a href="/addToCart?id=<%= product.id%>" class="btn btn-primary button1">Add to Cart</a></p>
+                <p><a href="/addToWishlist?id=<%= product.id%>" class="btn btn-info button1 button1">Wishlist</a></p>
+                <!-- <p><a href="#" class="btn btn-success button1">Buy Now</a></p> -->
+                <% } %>   
+          </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include("../layouts/footer.ejs") %>

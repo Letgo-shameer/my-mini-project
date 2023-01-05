@@ -1,0 +1,126 @@
+<%- include("../layouts/header.ejs") %>
+
+<div class="hero-wrap hero-bread mt-3" style="background-image: url('images/bg1.jpg')">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-0 bread">My Cart</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-cart">
+    <% if(userData[0].cart.item.length>0) {%> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ftco-animate">
+                <div class="cart-list">
+                    <table class="table">
+                    <thead class="thead-primary">
+                            <tr class="text-center">
+                                <th>Action</th>
+                                <th>Image</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                                <% for(let i=0;i<userData[0].cart.item.length;i++){%>
+                                <tr class="text-center">
+                                    <td>
+                                        <a class="btn btn-success" href="/addtowishlist/?id=<%= userData[0].cart.item[i].productId%>">Wishlist</a>
+                                    </td>
+                                    <td class="image-prod">
+                                        <div class="img" style="background-image: url('productImages/<%= userData[0].cart.item[i].image %>')"></div>
+                                    </td>
+    
+                                    <td class="product-name">
+                                        <h3><%= userData[0].cart.item[i].name %>  </h3>
+                                    </td>
+    
+                                    <td class="price"><%= userData[0].cart.item[i].price %></td>
+    
+                                    <td class="quantity">
+                                        <div class="input-group mb-3">
+                                            <input type="hidden" id="productId" value="<%= userData[0].cart.item[i].productId %> %>">
+                                         <input type="number" name="quantity" class="quantity form-control input-number qty"  value="<%= userData[0].cart.item[i].qty %>" min="1" max="10">
+                                      </div>
+                                    </td>
+
+                                    <td class="total"><%= userData[0].cart.item[i].price*userData[0].cart.item[i].qty %> </td>
+                                    
+                                    <td class="product-remove">
+                                        <a href="/deleteCart?id=<%= userData[0].cart.item[i].productId %>"><span class="ion-ios-close"></span></a>
+                                    </td>
+                                </tr>
+                            <%} %> 
+                            <!-- END TR-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                <div class="cart-total mb-3">
+                    
+                    <span class="d-flex">
+                        <h2>Cart Totals : &nbsp; <span class="text-success" id="totalCart"><%= userData[0].cart.totalPrice%></span> </h2> 
+                    </span>
+                    <!-- <p class="d-flex">
+                        <span>Discount</span>
+                        <span>$3.00</span>
+                    </p>
+                    <hr />
+                    <p class="d-flex total-price">
+                        <span>Total</span>
+                        <span>$17.60</span>
+                    </p> -->
+                    
+                </div>
+                <p class="text-center"><a href="/checkout?id=<%= userData[0]._id %> " class="btn btn-primary py-3 ">Proceed to Checkout</a></p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <% }else {%> 
+        <div style="margin-left:500px;">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_fzoupjne.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+      <h2 style="color: black; margin-left:30px;">CART IS EMPTY</h2> 
+      </div>
+      <% } %> 
+</section>
+
+<script>
+
+    const qty = document.querySelectorAll('.qty')		   
+    const qtyHandler = async(e)=>{
+       try {
+         const productId = e.target.parentElement.children[0].value
+          const data = {qty:e.target.value}
+            const response = await fetch(`/changeProductQnty?id=${productId}`,{
+             method:'post',
+             headers:{'Content-Type':'application/json'},
+              body:JSON.stringify(data)
+            })
+            const value = await response.json()
+           document.querySelector('#totalCart').innerText = value.totalPrice
+           e.target.parentElement.parentElement.nextElementSibling.innerText = value.price * e.target.value
+       } catch (error) {
+         console.log(error.message);
+       }
+    }
+    qty.forEach(q =>{
+     q.addEventListener('change',qtyHandler)
+    })
+
+
+</script>
+
+<%- include("../layouts/footer.ejs") %>

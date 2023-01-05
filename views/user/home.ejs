@@ -1,0 +1,271 @@
+<%- include("../layouts/header.ejs") %>
+
+<section id="home-section" class="hero">
+    <div class="home-slider js-fullheight owl-carousel">
+        <div class="slider-item js-fullheight">
+            <div class="overlay"></div>
+            <div class="container-fluid p-0">
+                <div
+                    class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
+                    data-scrollax-parent="true"
+                >
+                    <div
+                        class="one-third order-md-last img js-fullheight"
+                        style="background-image: url('/bannerImages/<%= banner[0].bannerimage[0]%>')"
+                    ></div>
+                    <div
+                        class="one-forth d-flex js-fullheight align-items-center ftco-animate"
+                        data-scrollax=" properties: { translateY: '70%' }"
+                    >
+                        <div class="text">
+                            <span class="subheading text-dark">Merch Shop</span>
+                            <div class="horizontal">
+                                <h1 class="mb-4 mt-3">Feel the passion for esports and more!!!<br /><span> </span> </h1>
+                                <p>
+                                    The Winter Sale is here! Gear up with the hottest esports merch at insane discounts! Save up to 80% on more than 300 products!
+                                </p>
+                                <p><a href="/shop" class="btn btn-primary px-5 py-3 mt-3">Discover Now</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-item js-fullheight">
+            <div class="overlay"></div>
+            <div class="container-fluid p-0">
+                <div
+                    class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
+                    data-scrollax-parent="true"
+                >
+                    <div
+                        class="one-third order-md-last img js-fullheight"
+                        style="background-image: url('/bannerImages/<%= banner[0].bannerimage[1]%>')"
+                    ></div>
+                    <div
+                        class="one-forth d-flex js-fullheight align-items-center ftco-
+                        
+                        animate"
+                        data-scrollax=" properties: { translateY: '70%' }"
+                    >
+                        <div class="text">
+                            <span class="subheading text-dark">Join with us !!!</span>
+                            <div class="horizontal">
+                                <h1 class="mb-4 mt-3">JOIN AND GET 15% OFF<br>
+                                    <span> </span> </h1>
+                                <p>
+                                    For more than two decades, we have been shaping the industry  
+                                </p>
+                                <p><a href="/shop" class="btn btn-primary px-5 py-3 mt-3">Shop Now</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+            <div class="col-md-12 heading-section text-center ftco-animate">
+                <h2 class="mb-4">Best Sellers</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% if(products.length>0){
+                for(let i=0;i<4;i++){ %>
+                    
+                    <div class="col-sm-6 col-md-6 col-lg-3 ftco-animate">
+                        <div class="product">
+                            <a href="/singleProduct?id=<%= products[i]._id%> " class="img-prod"
+                                ><img class="img-fluid" src="/productImages/<%= products[i].image[0]%>" alt="Colorlib Template" />
+                                <% if(products[i].offer != 0){
+                                    %>
+                                    <span class="status"><%= products[i].offer %>%</span>
+                                <% } %> 
+                                <div class="overlay"></div>
+                            </a>
+                            <div class="text py-3 px-3 shadow " style="height: 10rem;">
+                                <p style="height: 5rem;width: 8rem;"><a class="text-dark" href="#"><%= products[i].name  %> </a></p>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price">
+                                           <span class="text-success">₹<%= products[i].price%></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="bottom-area d-flex px-3">
+                                    <% if(userData.length==0){%>
+        
+                                    <a href="/login" class="add-to-cart text-center py-2 mr-1"
+                                        ><span>Add to cart <i class="ion-ios-add ml-1"></i></span
+                                    ></a>
+
+                                    <%}else{%> 
+                                    <a href="/shop"  class="add-to-cart text-center py-2 mr-1"
+                                        ><span>PURCHASE <i class="ion-ios-add ml-1"></i></span
+                                    ></a>
+                                        
+                                    <%} %>        
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <%}
+                }else{%>
+            <p>products not Found</p>
+                <%}%> 
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-choose ftco-no-pb ftco-no-pt">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 d-flex align-items-stretch">
+                <div class="img" style="background-image: url(images/about3.jpg)"></div>
+            </div>
+            <div class="col-md-4 py-md-5 ftco-animate">
+                <div class="text py-3 py-md-5">
+                    <h2 class="mb-4">new collection 2022</h2>
+                    <p>
+                        More than sportswear and workout clothes,We partner with the best in the industry to co-create. 
+                        This way we offer our fans the sports apparel and style that match their athletic needs, while keeping sustainability in mind. 
+                        We’re here to support creators.
+                        Improve their game. Create change.
+                        And we think about the impact we have on our world.
+                    </p>
+                    <p><a href="#" class="btn btn-white px-4 py-3">Shop now</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 order-md-last d-flex align-items-stretch">
+                <div class="img img-2" style="background-image: url(images/about2.jpg)"></div>
+            </div>
+            <div class="col-md-7 py-3 py-md-5 ftco-animate">
+                <div class="text text-2 py-md-5">
+                    <h2 class="mb-4"> Stylish range for the season</h2>
+                    <p>
+                        Featuring moisture-wicking fabrics and advanced technologies, you'll stay comfortable, even when training hard.
+                    </p>
+                    <p><a href="#" class="btn btn-white px-4 py-3">Shop now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section testimony-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate">
+                <h2 class="mb-4">ABOUT</h2>
+                <p>
+                    #GGFORALL will launch a range of new initiatives designed to tackle discrimination,
+                     promote mental wellbeing and progress environmental sustainability in esports. 
+                    Starting proudly with a new Global Women’s circuit in CS:GO supported by Intel®  and more partners joining soon.in
+                </p>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel">
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5 pl-4 line">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                    there live the blind texts.
+                                </p>
+                                <p class="name">Garreth Smith</p>
+                                <span class="position">Marketing Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(images/person_2.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5 pl-4 line">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                    there live the blind texts.
+                                </p>
+                                <p class="name">Garreth Smith</p>
+                                <span class="position">Interface Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5 pl-4 line">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                    there live the blind texts.
+                                </p>
+                                <p class="name">Garreth Smith</p>
+                                <span class="position">UI Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5 pl-4 line">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                    there live the blind texts.
+                                </p>
+                                <p class="name">Garreth Smith</p>
+                                <span class="position">Web Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5 pl-4 line">
+                                    Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                                    there live the blind texts.
+                                </p>
+                                <p class="name">Garreth Smith</p>
+                                <span class="position">System Analyst</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<hr />
+<%- include("../layouts/footer.ejs") %>

@@ -1,0 +1,177 @@
+<%- include("../layouts/header.ejs") %>
+
+<div class="hero-wrap hero-bread mt-3" style="background-image: url('images/bg1.jpg')">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-0 bread">All Collections</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container"><br/>
+	<div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col">
+                    <input class="form-control form-control-lg" type="text" placeholder="Search keywords" onkeyup="sendData(this)">
+                    <section id="searchResults">
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="mt-5 mb-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-10 order-md-last">
+                <div class="row">
+					<!-- Products -->
+                    <% if(products.length > 0){
+                        for(let i=0; i<products.length ;i++){ %>
+                            <div class="col-sm-6 col-md-6 col-lg-3 ftco-animate">
+                                <div class="product">
+                                    <a href="/singleProduct?id=<%= products[i]._id%>" class="img-prod"
+                                        ><img class="img-fluid" src="/productImages/<%= products[i].image%>" alt="Colorlib Template" />
+                                        <% if(products[i].offer != 0){
+                                            %>
+                                            <span class="status"><%= products[i].offer %>%</span>
+                                        <% } %>
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 px-3 shadow " style="height: 8rem;">
+                                        <h3><a href="#"><%= products[i].name %> </a></h3>
+                                        <div class="d-flex" style="height: 4rem;">
+                                            <div class="pricing" style="height: 4rem;">
+                                                <p class="price">
+                                                    <% if(products[i].offer != 0){
+                                                        %>
+                                                    <span class="mr-2 price-dc">₹<%=products[i].price %></span><% } %><span class="price-sale ">₹<%= products[i].price *(100 - products[i].offer)/100 %></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p class="bottom-area d-flex px-3">
+                                            <% if(userData.length==0){%>
+                
+                                                <a href="/login" class="add-to-cart text-center py-2 mr-1"
+                                                    ><span>Add to cart <i class="ion-ios-add ml-1"></i></span
+                                                ></a>
+                                           
+        
+                                            <%}else{%> 
+                                                <input type="hidden" value="<%=products[i].id %>">
+                                                <a class="add-to-cart text-center py-2 mr-1 addToCartbtn"
+                                                    ><span>Add to cart <i class="ion-ios-add ml-1"></i></span
+                                                ></a>
+                                            
+                                                
+                                            <%} %>        
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <%}
+                    }else{%>
+                        <p>products not Found</p>
+                    <%}%> 
+					<!-- Product End -->
+                </div>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li><a href="#">&lt;</a></li>
+                                <li class="active"><span>1</span></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&gt;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2 sidebar">
+                <div class="sidebar-box-2">
+                    <h2 class="heading mb-4"><a href="#">Category</a></h2>
+                    <ul>
+                        <% if(categoryData.length>0){
+                            for(let i=0;i<categoryData.length;i++){%>
+                                
+                                <li><a href="/categoryProduct?category=<%= categoryData[i].tittle %>"><%= categoryData[i].tittle%> </a></li>
+                                
+                            <%}
+                        }else{%>
+                            <p>Categories Not Found </p>
+                        <%}%>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function sendData(e){
+        const searchResults= document.getElementById("searchResults")
+        let match = e.value.match(/^[a-zA-Z ]*$/);
+        let match2 = e.value.match(/\s*/);
+        if (match2[0] === e.value){
+            searchResults.innerHTML = '';
+            return;
+        }
+        if(match[0] === e.value){
+            fetch("getProducts",{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({products: e.value})
+        }).then(res=> res.json()).then(data=>{
+            let products= data.products;
+            searchResults.innerHTML="";
+            if(products.length<1){
+                searchResults.innerHTML = "<p>Sorry. Nothing found</p>" 
+                return;
+            }
+            products.forEach((item,index) => {
+
+                if(index > 0)searchResults.innerHTML += "<hr>";
+                searchResults.innerHTML +=  `<a href="/singleProduct?id=${item._id}"> ${item.name} <\a>`
+
+            });
+        });
+        return;
+        }
+    }
+
+// add to cart ----------------
+
+const addToCartbtns = document.querySelectorAll('.addToCartbtn')
+
+const addToCartbtnHandler = async(e)=>{
+    console.log("sdfds");
+    const id = e.target.parentElement.parentElement.children[0].value
+    console.log(id);
+    const data = {qty :1}
+    console.log(data);
+    const response = await fetch(`/addToCartFrom?id=${id}`,{
+        method:'post',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(data)
+    })
+    const value = await response.json()
+    console.log(value);
+    document.querySelector('#cartLength').innerText=value.cartLength
+    }
+addToCartbtns.forEach(x=>{
+  x.addEventListener('click',addToCartbtnHandler) 
+})
+
+</script>
+
+<%- include("../layouts/footer.ejs") %>

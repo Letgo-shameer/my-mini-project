@@ -1,0 +1,85 @@
+<%- include("../layouts/adminHeader.ejs") %>
+
+<div class="container bootstrap snippets bootdey mt-3 p-5">
+    <h1 class="text-info">Add Product</h1>
+    <hr />
+    <% if(typeof message!="undefined"){ %>
+      <p class="text-success"><%= message %></p>
+      <%}%>
+    <div class="row">
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <form class="form-horizontal" action="" enctype="multipart/form-data" method="post" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Name</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="" name="name" />
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Price</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="" name="price" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">tax</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="" name="author" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Stock</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="" name="stock" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Offer</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="" name="offer" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Description</label>
+                    <div class="col-lg-8">
+                        <!-- <input class="form-control" type="text" value="" name="description" /> -->
+                        <textarea  class="form-control" cols="30" rows="10" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Category</label>
+                    <div class="col-lg-8">
+                        <div class="ui-select">
+                          <select id="user_time_zone" class="form-control" name="category">
+                          <%
+                          if(categories.length>0){
+                              for(let i=0;i<categories.length;i++){
+                                  %>
+                                <option value="<%= categories[i].tittle%>"><%= categories[i].tittle%></option>
+                          <%
+                          }
+                          }else{
+                            %><p colspan="5">Products not found</p><%
+                          }
+                          %>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                        <h6>Upload a Photo</h6>
+                        <input type="file" class="form-control" name="image" multiple/>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success mt-3">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr />
+
+<%- include("../layouts/adminFooter.ejs") %>

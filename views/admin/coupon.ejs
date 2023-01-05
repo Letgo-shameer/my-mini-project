@@ -1,0 +1,64 @@
+<%- include("../layouts/adminHeader.ejs") %>
+
+<div class="container mt-5">
+        <div class="">
+            <div class="comment-wrapper">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <h3>Coupon Management</h3>
+                    </div>
+                    <div class="panel-body p-4">
+                        <% if(typeof message!="undefined"){ %>
+                            <p class="text-success"><%= message %></p>
+                            <%}%>
+                        <form action="" method="post" class="">
+                            <input type="text" name="name" placeholder="Coupon Name" class=""/>
+                            <input type="text" name="value" placeholder="Coupon Amount" class="mf-2"/>
+                            <input type="text" name="code" placeholder="Coupon Code" class="mf-2"/>
+                            <input type="date" name="expirydate" class="mf-2"/>
+                            <input type="text" name="minimumbill" placeholder="Minimum Bill" class="mf-2"/>
+                            <button type="submit" class="btn btn-info mt-3 ">Add</button>
+                            <hr />
+                        </form>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Value</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Expiry Date</th>
+                                    <th scope="col">Minimum Bill</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                if(couponData.length>0){
+                                    for(let i=0;i<couponData.length;i++){
+                                        %>
+                                        <tr>
+                                            <td><%= couponData[i].name%></td>
+                                            <td><%= couponData[i].amount%></td>
+                                            <td><%= couponData[i].code%></td>
+                                            <td><%= couponData[i].expirydate%></td>
+                                            <td><%= couponData[i].Minimumbill%></td>
+                                            <% if(couponData[i].isActive){ %>
+                                                <td><a class="btn btn-danger" onclick="return confirm('Are You Sure...!');" href="/admin/deactivateCoupen?id=<%= couponData[i]._id%>">Deactivate</a></td>
+                                            <% }else{%>
+                                                <td><p class="text-danger">Expired Coupen</p></td>
+                                            <%} %> 
+                                        
+                                        </tr>
+                                    <% } %> 
+                                <% } else { %>
+                                    <p>No Coupon Found</p>
+                                <% } %> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<%- include("../layouts/adminFooter.ejs") %>

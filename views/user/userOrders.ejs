@@ -1,0 +1,57 @@
+<%- include("../layouts/header.ejs") %>
+
+<div class="container mt-5">
+    <div class="">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center">
+                    <h3>My Orders</h3>
+                </div>
+                <div class="panel-body p-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order Id</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i=0;i<orders.length;i++){ %> 
+                            <tr>
+                                <td><%= orders[i]._id %> </td>
+                                <td><%= orders[i].payment %> </td>
+                                <%if(orders[i].status=="Canceled") { %>     
+                                <td class="text-danger"><%= orders[i].status %> </td>
+                                    <%  }else{ %>
+                                        <td class="text-success"><%= orders[i].status %> </td>        
+                                    <% } %> 
+                                    <% if(orders[i].status != "Canceled") { %> 
+                                    <td>
+                                    <a  class="btn btn-danger" href="/cancelOrder?id=<%= orders[i]._id %>" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a>
+                                    </td> 
+                                    <td>
+                                    <a class="btn btn-info" href="/singleOrderView?id=<%= orders[i]._id %>">View</a>
+                                    </td>
+                                    <%}else{ %>
+                                        <td>
+                                        <h6>Order Cancelled</h6>
+                                        </td>
+                                        <td>
+                                        <a class="btn btn-info" href="/singleOrderView?id=<%= orders[i]._id %>">View</a>
+                                        </td>
+                                    <% } %> 
+                                </td>
+                            </tr>
+                            <% } %> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../layouts/footer.ejs") %>

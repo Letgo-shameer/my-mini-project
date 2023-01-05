@@ -1,0 +1,62 @@
+<%- include("../layouts/header.ejs") %>
+<section>
+ <div class="container text-center mt-3 mb-5">
+    <h1 style="color: black;">WISHLIST</h1>  
+    
+    <div class="row">
+        
+        <div class="col-md-12 ftco-animate">
+            <% if(a.item.length>0){ %> 
+            <div class="cart-list">
+               
+                <table class="table">
+                    <thead class="thead-primary">
+                        <tr class="text-center">
+                            <th>Action</th>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% a.item.forEach(x=>{%>
+                        <tr class="text-center">
+
+                            <td class="quantity">
+                                <div class="input-group mb-3">
+                             <a class="btn btn-success" href="/addToCartFrom?id=<%=x.productId._id %>" >Move To Cart</a>
+                              </div>
+                            </td>
+                            <td class="image-prod">
+                                <div class="img" style="background-image: url('productImages/<%= x.productId.image %>')"></div>
+                            </td>
+
+                            <td class="product-name">
+                                <h3> <%= x.productId.name %> </h3>
+                            </td>
+
+                            <td class="price"><%= x.productId.price %></td>
+
+                         
+                            <td class="product-remove">
+                                <a href="/deletewishlist?id=<%= x.productId._id %>"><span class="ion-ios-close"></span></a>
+                            </td>
+                        </tr>
+                        <%}) %>     
+                    </tbody>
+                    <% }else {%> 
+                        <div style="margin-left:300px;">
+                        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                      <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_fzoupjne.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+                      <h4 style="color: black; margin-right: 300px;">EMPTY WISHLIST</h4> 
+                      </div>
+                      <% } %> 
+                </table>
+            </div>
+        </div>
+    </div>
+ </div>
+</section>
+
+<%- include("../layouts/footer.ejs") %>

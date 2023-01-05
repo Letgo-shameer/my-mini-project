@@ -1,0 +1,51 @@
+<%- include("../layouts/adminHeader.ejs") %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 col-sm-12 col-lg-6">
+            <div class="panel-heading text-center">
+                <h3 >Category</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">SI</th>
+                    <th scope="col">Categories</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                    if(categories.length>0){
+                        for(let i=0;i<categories.length;i++){
+                            %>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= categories[i].tittle%></td> 
+                                <td><a class=" btn btn-primary" onclick="return confirm('Are You Sure...!');" href="/admin/delete-category?id=<%= categories[i]._id %>">Delete</a></td> 
+                            </tr>
+                            <%
+                        }
+                    }else{
+                        %>
+                        <tr>
+                            <td colspan="5">Category not found</td>
+                        </tr>    
+                        <%
+                    }
+                    %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6 text-center">
+            <form action="" method="post">
+                <input type="text" name="tittle">
+                <% if(typeof message!="undefined"){ %>
+                    <p class="text-danger"><%= message %></p>
+                    <%}%>                    
+            <button type="submit" class="btn btn-info pull-right mt-3">Add</button>                      
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include("../layouts/adminFooter.ejs") %>
